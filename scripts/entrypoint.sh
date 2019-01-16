@@ -7,7 +7,10 @@ for i in $(seq -s ' ' 1 100); do
   for j in $(seq -s ' ' 1 ${N_ZOOKEEPER}); do
     [[ -z $(getent hosts zoo${j}) ]] || COUNT=$[${COUNT}+1]
   done
-  if [[ ${N_ZOOKEEPER} == ${COUNT} ]]; then
+  if [[ ${N_ZOOKEEPER} != ${COUNT} ]]; then
+    if [[ $i -eq 100 ]]; then
+      exit 1
+    fi
     sleep 1
   else
     break
